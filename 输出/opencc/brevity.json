@@ -1,0 +1,19 @@
+{
+  "name": "Chinese to Brevity Code",
+  "segmentation": {
+    "type": "mmseg",
+    "dict": {
+      "type": "text",
+      "file": "brevity.txt"
+    }
+  },
+  "conversion_chain": [{
+    "dict": {
+      "type": "group",
+      "dicts": [{
+        "type": "text",
+        "file": "brevity.txt"
+      }]
+    }
+  }]
+}
