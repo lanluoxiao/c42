@@ -1,0 +1,19 @@
+{
+  "name": "Chinese to Comps",
+  "segmentation": {
+    "type": "mmseg",
+    "dict": {
+      "type": "text",
+      "file": "division.txt"
+    }
+  },
+  "conversion_chain": [{
+    "dict": {
+      "type": "group",
+      "dicts": [{
+        "type": "text",
+        "file": "division.txt"
+      }]
+    }
+  }]
+}

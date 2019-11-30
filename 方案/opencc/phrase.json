@@ -1,0 +1,16 @@
+{
+  "name": "Character to Phrases",
+  "segmentation": {
+    "type": "mmseg",
+    "dict": {
+      "type": "text",
+      "file": "phrase.txt"
+    }
+  },
+  "conversion_chain": [{
+    "dict": {
+        "type": "text",
+        "file": "phrase.txt"
+      }
+  }]
+}
