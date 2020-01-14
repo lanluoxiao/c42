@@ -174,7 +174,7 @@ C 输入（下简称 C）是百度贴吧用户 @dsscicin 于 2015 年发布的�
 
 开启后，打一个字会出来有这个字含义的很多 Emoji。例：
 
-![image-20181207224812737](/Users/tansongchen/Library/Application Support/typora-user-images/image-20181207224812737.png)
+
 
 但是，如果这个 Emoji 必须用 2 个以上字描述，就得用到反查拼音来间接打出。例：
 
