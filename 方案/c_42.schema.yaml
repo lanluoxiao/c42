@@ -10,6 +10,10 @@ schema:
     - 蓝落萧改编
   description: |
     改编自 Cicin 所作的 C 输入，取前 3 码为全码，4 码顶 2 码上屏
+  dependencies:
+    - c_42a
+    - pinyin_simp
+    - stroke
  
 
 switches:
