@@ -1,0 +1,11 @@
+# Rime dictionary: c_42a
+# encoding: utf-8
+
+---
+name: c_42a
+version: "1"
+sort: original
+columns:
+  - text
+  - code
+...

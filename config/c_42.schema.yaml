@@ -14,7 +14,6 @@ schema:
     - c_42a
     - pinyin_simp
     - stroke
- 
 
 switches:
   - name: ascii_mode
@@ -202,8 +201,8 @@ punctuator:
     '?' : { commit: ？ }
     ';' : { commit: ； }
     ':' : { commit: ： }
-    '''' : { pair: [ '‘', '’' ] }
-    '"' : { pair: [ '“', '”' ] }
+    '''' : { pair: [ '「', '」' ] }
+    '"' : { pair: [ '『', '』' ] }
     '\' : { commit: 、 }
     '|' : { commit: ｜ }
     '`' : ["·", "｜", "§", "¦"]
