@@ -28,10 +28,10 @@ switches:
     states: [ 简, 繁 ]
   - name: emoji_suggestion
     states: [ "🈚️️\uFE0E", "🈶️️\uFE0F" ]
-    reset: 0
+    reset: 1
   - name: phrase_prediction
     states: [ 单, 词 ]
-    reset: 0
+    reset: 1
   - name: brevity_code_suggestion
     states: [ 无, 简 ]
     reset: 0
@@ -151,15 +151,18 @@ emoji_suggestion:
 assist:
   tag: assist
   dictionary: c_42a
+  enable_user_dict: false
 
 pinyin_lookup:
   tag: pinyin_lookup
   dictionary: pinyin_simp
+  enable_user_dict: false
   tips: "〔拼音〕"
 
 bihua_lookup:
   tag: bihua_lookup
   dictionary: stroke
+  enable_user_dict: false
   tips: "〔笔画〕"
 
 # 反查
@@ -176,6 +179,7 @@ pinyin_reverse_lookup:
   tags: [ pinyin_lookup ] 
   overwrite_comment: true
   dictionary: c_42a
+  enable_user_dict: false
   comment_format:
     - "xform/$/〕/"
     - "xform/^/〔/"
@@ -184,6 +188,7 @@ bihua_reverse_lookup:
   tags: [ bihua_lookup ] 
   overwrite_comment: true
   dictionary: c_42a
+  enable_user_dict: false
   comment_format:
     - "xform/$/〕/"
     - "xform/^/〔/"
@@ -235,4 +240,4 @@ key_binder:
     - { when: has_menu, accept: 7, send: 5}
 
 menu:
-  page_size: 10
+  page_size: 6

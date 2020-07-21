@@ -52,13 +52,13 @@ with open('assets/decomposition.dat') as decompositionFile:
             qd[char] = quanma
         charSet[char] = []
 
-with open('build/c_42.dict.yaml', 'w') as c42Dict:
+with open('rime/c_42.dict.yaml', 'w') as c42Dict:
     c42Dict.write(c42Meta)
     for char, code in brevity:
         c42Dict.write('%s\t%s\n' % (char, code))
         c42Dict.write('　\t%s\n' % code)
 
-with open('build/c_42a.dict.yaml', 'w') as c42aDict:
+with open('rime/c_42a.dict.yaml', 'w') as c42aDict:
     key = 'abcdefghijklmnopqrstuvwxyz;'
     all3 = [x + y + z for x in key for y in key for z in key]
     c42aDict.write(c42aMeta)
@@ -75,7 +75,7 @@ with open('build/c_42a.dict.yaml', 'w') as c42aDict:
     for char, code in specialty:
         c42aDict.write('%s\t%s\n' % (char, code))
 
-with open('build/opencc/brevity.txt', 'w') as filterBrevity:
+with open('rime/opencc/brevity.txt', 'w') as filterBrevity:
     brevityCharOnly = [(x[0], x[1]) for x in brevity if len(x[0]) == 1 and x[0] != '　']
     for char, code in brevityCharOnly:
         if code != qd[char][:2]:
@@ -86,12 +86,12 @@ with open('build/opencc/brevity.txt', 'w') as filterBrevity:
         else:
             filterBrevity.write('%s\t%s\n' % (char, code))
 
-with open('build/opencc/brevity2.txt', 'w') as filterBrevityWord:
+with open('rime/opencc/brevity2.txt', 'w') as filterBrevityWord:
     brevityWordOnly = [(x[0], x[1]) for x in brevity if len(x[0]) == 2]
     for char, code in brevityWordOnly:
         filterBrevityWord.write('%s\t%s\n' % (char, code))
 
-with open('build/opencc/division.txt', 'w') as filterDivision:
+with open('rime/opencc/division.txt', 'w') as filterDivision:
     for char, code in div:
         filterDivision.write('%s\t%s\n' % (char, code))
 
@@ -103,12 +103,14 @@ for word, freq in wordFreqList:
     if len(charSet.get(char, [])) < 5:
         charSet[char].append(word)
 
-with open('build/opencc/phrase.txt', 'w') as filterPhrase:
+with open('rime/opencc/phrase.txt', 'w') as filterPhrase:
     for char, phraseList in charSet.items():
         if phraseList:
             filterPhrase.write('%s\t%s %s\n' % (char, char, ' '.join(phraseList)))
 
 for name in ('c_42.schema', 'c_42a.schema', 'symbols_for_c'):
-    shutil.copyfile('config/%s.yaml' % name, 'build/%s.yaml' % name)
+    shutil.copyfile('config/%s.yaml' % name, 'rime/%s.yaml' % name)
 for name in ('brevity', 'brevity2', 'division', 'emoji', 'phrase'):
-    shutil.copyfile('config/%s.json' % name, 'build/opencc/%s.json' % name)
+    shutil.copyfile('config/%s.json' % name, 'rime/opencc/%s.json' % name)
+for name in ('emoji_category', 'emoji_word'):
+    shutil.copyfile('config/%s.txt' % name, 'rime/opencc/%s.txt' % name)
