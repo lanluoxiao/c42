@@ -238,6 +238,7 @@ key_binder:
     - { when: has_menu, accept: 9, send: 3}
     - { when: has_menu, accept: 8, send: 4}
     - { when: has_menu, accept: 7, send: 5}
+    - { when: has_menu, accept: Tab, send: Page_Down }
 
 menu:
   page_size: 6
