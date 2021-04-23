@@ -1,0 +1,246 @@
+# Rime schema settings
+# encoding: utf-8
+
+schema:
+  schema_id: c_42
+  name: "C四二"
+  version: "2.4"
+  author:
+    - Cicin（15.02.05版）
+    - 蓝落萧改编
+  description: |
+    改编自 Cicin 所作的 C 输入，取前 3 码为全码，4 码顶 2 码上屏
+  dependencies:
+    - c_42a
+    - pinyin_simp
+    - stroke
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中, 西 ]
+  - name: full_shape
+    states: [ 半, 全 ]
+  - name: ascii_punct
+    states: [ 。, ． ]
+  - name: zh_trad
+    reset: 0
+    states: [ 简, 繁 ]
+  - name: emoji_suggestion
+    states: [ "🈚️️\uFE0E", "🈶️️\uFE0F" ]
+    reset: 1
+  - name: phrase_prediction
+    states: [ 单, 词 ]
+    reset: 1
+  - name: brevity_code_suggestion
+    states: [ 无, 简 ]
+    reset: 0
+  - name: brevity_code_suggestion2
+    states: [ 无, 词 ]
+    reset: 0
+  - name: division_suggestion
+    states: [ 无, 拆 ]
+    reset: 0
+
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - affix_segmentor@assist
+    - affix_segmentor@reverse_lookup
+    - affix_segmentor@pinyin_lookup
+    - affix_segmentor@bihua_lookup
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator
+    - script_translator@assist
+    - script_translator@pinyin_lookup
+    - script_translator@bihua_lookup
+  filters:
+    - simplifier@brevity_code_suggestion
+    - simplifier@emoji_suggestion
+    - simplifier@phrase_prediction
+    - simplifier@brevity_code_suggestion2
+    - simplifier@division_suggestion
+    - simplifier@zh_trad
+    - reverse_lookup_filter@pinyin_reverse_lookup
+    - reverse_lookup_filter@bihua_reverse_lookup
+    
+speller:
+  alphabet: "qwertasdfgzxcvbyuiophjkl;nm,./"
+  initials: "qwertasdfgzxcvbyuiophjkl;nm"
+  auto_select: true
+
+translator:
+  dictionary: c_42
+  enable_charset_filter: true
+  enable_sentence: false
+  enable_encoder: false
+  encode_commit_history: false
+  enable_user_dict: false
+  enable_completion: false
+
+# 滤镜
+brevity_code_suggestion:
+  opencc_config: brevity.json
+  option_name: brevity_code_suggestion
+  tips: all
+  show_in_comment: true
+  comment_format:
+    - xform/^(?!~)/二简〔/
+    - xform/^~~/无理〔/
+    - xform/^~/重码〔/
+    - xform/$/〕/
+  tags:
+    - assist
+
+division_suggestion:
+  opencc_config: division.json
+  option_name: division_suggestion
+  tips: all
+  show_in_comment: true
+  comment_format:
+    - xform/^/〔/
+    - xform/$/〕/
+
+brevity_code_suggestion2:
+  opencc_config: brevity2.json
+  option_name: brevity_code_suggestion2
+  tips: all
+  show_in_comment: true
+  comment_format:
+    - xform/^/简词〔/
+    - xform/$/〕/
+  tags:
+    - abc
+
+phrase_prediction:
+  opencc_config: phrase.json
+  option_name: phrase_prediction
+  tips: none
+  tags:
+    - abc
+
+zh_trad:
+  opencc_config: s2tw.json
+  option_name: zh_trad
+  tags:
+    - abc
+
+emoji_suggestion:
+  opencc_config: emoji.json
+  option_name: emoji_suggestion
+  tips: all
+  tags:
+    - abc
+    - pinyin_lookup
+
+# 副翻译器
+assist:
+  tag: assist
+  dictionary: c_42a
+  enable_user_dict: false
+
+pinyin_lookup:
+  tag: pinyin_lookup
+  dictionary: pinyin_simp
+  enable_user_dict: false
+  tips: "〔拼音〕"
+
+bihua_lookup:
+  tag: bihua_lookup
+  dictionary: stroke
+  enable_user_dict: false
+  tips: "〔笔画〕"
+
+# 反查
+reverse_lookup: 
+  tag: reverse_lookup
+  prefix: "`"
+  suffix: ";"
+  tips: "【反查】"
+  extra_tags:
+    - pinyin_lookup
+    - bihua_lookup
+
+pinyin_reverse_lookup:
+  tags: [ pinyin_lookup ] 
+  overwrite_comment: true
+  dictionary: c_42a
+  enable_user_dict: false
+  comment_format:
+    - "xform/$/〕/"
+    - "xform/^/〔/"
+
+bihua_reverse_lookup:
+  tags: [ bihua_lookup ] 
+  overwrite_comment: true
+  dictionary: c_42a
+  enable_user_dict: false
+  comment_format:
+    - "xform/$/〕/"
+    - "xform/^/〔/"
+    - "xform/~//"
+
+# 标点
+punctuator:
+  import_preset: symbols_for_c
+  half_shape:
+    ",": { commit: "，" }
+    ".": { commit: "的" }
+    "/": { commit: "。" }
+    '<' : { commit: "《" }
+    '>' : { commit: "》" }
+    '?' : { commit: ？ }
+    ';' : { commit: ； }
+    ':' : { commit: ： }
+    '''' : { pair: [ '「', '」' ] }
+    '"' : { pair: [ '『', '』' ] }
+    '\' : { commit: 、 }
+    '|' : { commit: ｜ }
+    '`' : ["·", "｜", "§", "¦"]
+    '~' : [ '~', ～ ]
+    '!' : { commit: ！ }
+    '^' : { commit: …… }
+    '(' : （
+    ')' : ）
+    '-' : '-'
+    '_' : ——
+    '+' : '+'
+    '=' : '='
+    '[' : { commit: 【 }
+    ']' : { commit: 】 }
+    '{' : { commit: ｛ }
+    '}' : { commit: ｝ }
+
+# 杂项
+recognizer:
+  patterns:
+    assist: "^[a-z;]{3}$"
+    reverse_lookup: "^`[a-z]*'?$"
+    punct: "^~([0-9]0?|[A-Za-z]+)$"
+
+key_binder:
+  bindings:
+    - { when: has_menu, accept: 0, send: 2}
+    - { when: has_menu, accept: 9, send: 3}
+    - { when: has_menu, accept: 8, send: 4}
+    - { when: has_menu, accept: 7, send: 5}
+    - { when: has_menu, accept: Tab, send: Page_Down }
+
+menu:
+  page_size: 6

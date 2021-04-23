@@ -1,0 +1,57 @@
+# Rime schema settings
+# encoding: utf-8
+
+schema:
+  schema_id: c_42a
+  name: "C四二辅码"
+  version: "1"
+  author:
+    - Cicin
+  description: |
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中, 西 ]
+  - name: full_shape
+    states: [ 半, 全 ]
+  - name: ascii_punct
+    states: [ 。, ． ]
+  - name: zh_trad
+    reset: 0
+    states: [ 简, 繁 ]
+    
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+  filters:
+    - uniquifier
+    - simplifier
+    
+speller:
+  alphabet: "qwertasdfgzxcvbyuiophjkl;nm,./"
+  algebra:
+    # 若关，则没有二简及无理提示
+    - xform/~//
+
+translator:
+  dictionary: c_42a
+  enable_user_dict: false
+  enable_encoder: false
+  enable_commit_history: false
