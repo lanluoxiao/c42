@@ -138,6 +138,8 @@ phrase_prediction:
 zh_trad:
   opencc_config: s2tw.json
   option_name: zh_trad
+  tags:
+    - abc
 
 emoji_suggestion:
   opencc_config: emoji.json
